@@ -1,0 +1,29 @@
+player-info:
+  current_rank:
+  staff_rank:
+  build_rank:
+  current_title:
+  titles:
+    title_1: true
+    title_2: false
+  guild_id:
+  settings:
+    setting_1: true
+    setting_2: false
+
+player-review-stats:
+  reviewed_while_offline:
+  new_scores_available:
+  current-stats:
+    total_plot-score:
+    rating:
+    average_stoc:
+    total_stoc:
+    accepted_submissions:
+  changed-stats:
+    total_plot_score_difference:
+    rating_difference:
+    average_stoc_difference:
+  tickets:
+
+
