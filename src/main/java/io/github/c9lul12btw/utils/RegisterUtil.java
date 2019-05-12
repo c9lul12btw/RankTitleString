@@ -16,15 +16,6 @@ public class RegisterUtil {
     }
 
     public static void registerCommand(String commandName, CommandExecutor executor) {
-        if (RankTitleString.getPlugin(RankTitleString.class) == null) {
-            LoggerUtil.logMessage("getcommand is null");
-        } else if (RankTitleString.getPlugin(RankTitleString.class).getCommand(commandName) == null) {
-            LoggerUtil.logMessage("getplugin is null");
-        } else if (executor == null) {
-            LoggerUtil.logMessage("executor is null");
-        } else if (commandName == null) {
-            LoggerUtil.logMessage("executor is null");
-        }
         RankTitleString.getPlugin(RankTitleString.class).getCommand(commandName).setExecutor(executor);
     }
 
