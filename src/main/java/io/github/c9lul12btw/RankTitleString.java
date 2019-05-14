@@ -13,7 +13,7 @@ public class RankTitleString extends JavaPlugin { // Must extend JavaPlugin from
     public void onEnable() {
         LoggerUtil.logMessage("Plugin has been enabled!");
         saveDefaultConfig();
-        this.getCommand("rt").setExecutor(new MainCommand());
+        this.getCommand("rank").setExecutor(new MainCommand());
         //registerCmds();
         //registerListeners();
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){

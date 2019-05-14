@@ -27,15 +27,4 @@ public class RankManager {
             data_titles.put(user, config.getString("users." + user + ".current_title"));
         }
     }
-
-    static String getPrefix(Player player) {
-        return  "&7[" +
-                Rank.getTitleRank(Rank.TitleRank.valueOf(data_titles.get(player.getName().toLowerCase()).toUpperCase()))
-                + " &7- " +
-                Rank.getBuildRank(Rank.BuildRank.valueOf(data_ranks.get(player.getName().toLowerCase()).toUpperCase()))
-                + "&7]&r";
-    }
-
-
-
 }

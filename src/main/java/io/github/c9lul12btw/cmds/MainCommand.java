@@ -1,12 +1,19 @@
 package io.github.c9lul12btw.cmds;
 
-import io.github.c9lul12btw.Rank;
-import io.github.c9lul12btw.managers.RankManager;
+import io.github.c9lul12btw.RankTitleString;
+import io.github.c9lul12btw.gui.TitleGui;
+import io.github.c9lul12btw.utils.GuiUtil;
+import io.github.c9lul12btw.utils.GuiUtil.GuiItem;
 import io.github.c9lul12btw.utils.LoggerUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 
 public class MainCommand implements CommandExecutor {
 
@@ -17,28 +24,30 @@ public class MainCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        switch(args[0].toLowerCase()) {
-            case "title": {
-                LoggerUtil.sendMessage(player, "Successfully changed title to " + Rank.getTitleRank(Rank.TitleRank.valueOf(args[1])));
-                RankManager.data_titles.put(player.getName().toLowerCase(), args[1]);
-                break;
-            }
-            case "rank": {
-                LoggerUtil.sendMessage(player, "Successfully changed rank to " + Rank.getBuildRank(Rank.BuildRank.valueOf(args[1])));
-                RankManager.data_ranks.put(player.getName().toLowerCase(), args[1]);
-                break;
-            }
-            case "list": {
-                LoggerUtil.sendMessage(player, "&eRANKS LIST: ");
-                for (Rank.BuildRank rank : Rank.BuildRank.values()) {
-                    LoggerUtil.sendMessage(player, "&7- " + rank.toString());
+        OfflinePlayer target;
+
+        switch (args[0]) {
+            case "":
+                if (args.length < 2) {
+                    target = player;
                 }
-                LoggerUtil.sendMessage(player, "&eTITLES LIST: ");
-                for (Rank.TitleRank rank : Rank.TitleRank.values()) {
-                    LoggerUtil.sendMessage(player, "&7- " + rank.toString());
+                else {
+                    target = Bukkit.getOfflinePlayer(args[1]);
                 }
-                break;
-            }
+                FileConfiguration config = RankTitleString.getInstance().getConfig();
+                ArrayList<GuiItem> items = new ArrayList<>();
+                for (String title : config.getConfigurationSection("users." + target.getName().toLowerCase() + ".titles").getKeys(false)) {
+                    items.add(TitleGui.getTitleItem(
+                            target.getPlayer(),
+                            Boolean.valueOf(config.getString("users." + target.getName().toLowerCase() + ".titles." + title)),
+                            title,
+                            config.getString("users." + target.getName().toLowerCase() + ".build_rank"),
+                            config.getString("users." + target.getName().toLowerCase() + ".staff_rank"),
+                            config)
+                    );
+                }
+                return TitleGui.show(player, 1, items, null, target);
+
         }
         return true;
     }
