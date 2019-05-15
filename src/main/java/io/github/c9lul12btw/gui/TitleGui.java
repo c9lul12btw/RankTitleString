@@ -2,8 +2,8 @@ package io.github.c9lul12btw.gui;
 
 import io.github.c9lul12btw.Rank;
 import io.github.c9lul12btw.Rank.TitleRank;
-import io.github.c9lul12btw.utils.GuiUtil;
-import io.github.c9lul12btw.utils.GuiUtil.*;
+import io.github.c9lul12btw.RankTitleString;
+import io.github.c9lul12btw.gui.GuiUtil.*;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -21,7 +21,7 @@ public class TitleGui extends Gui {
     private OfflinePlayer target;
     private GuiItem pane1, pane2;
 
-    public TitleGui(Player p, int page, ArrayList<GuiItem> items, Gui previousGui, OfflinePlayer target) {
+    private TitleGui(Player p, int page, ArrayList<GuiItem> items, Gui previousGui, OfflinePlayer target) {
         super(p, "§2Title Selector", 54, page);
         this.items = items;
         this.target = target;
@@ -52,7 +52,7 @@ public class TitleGui extends Gui {
         return true;
     }
 
-    public static boolean show(TitleGui gui) {
+    private static boolean show(TitleGui gui) {
         return show(gui.getPlayer(), gui.getPage(), gui.getItems(), gui, gui.getTarget());
     }
 
@@ -67,11 +67,11 @@ public class TitleGui extends Gui {
     }
 
 
-    public ArrayList<GuiItem> getItems() {
+    private ArrayList<GuiItem> getItems() {
         return items;
     }
 
-    public OfflinePlayer getTarget() {
+    private OfflinePlayer getTarget() {
         return target;
     }
 
@@ -97,7 +97,7 @@ public class TitleGui extends Gui {
                 .click(() -> this.getPlayer().closeInventory()).build();
     }
 
-    public static GuiItem getTitleItem(Player p, boolean achieved, String titleId, String buildRankId, String staffRankId, FileConfiguration config) {
+    public static GuiItem getTitleItem(Player p, String titleId, String buildRankId, String staffRankId, FileConfiguration config) {
         final TitleRank titleRank = TitleRank.valueOf(titleId.toUpperCase());
         final String titlePrefix = titleRank.getPrefix();
         final String description = titleRank.getDescription();
@@ -109,10 +109,10 @@ public class TitleGui extends Gui {
         if (staffRankId.equalsIgnoreCase("none")) {
             rankPrefix = Rank.BuildRank.valueOf(buildRankId.toUpperCase()).getPrefix();
         } else {
-            rankPrefix = Rank.StaffRank.valueOf(buildRankId.toUpperCase()).getPrefix();
+            rankPrefix = Rank.StaffRank.valueOf(staffRankId.toUpperCase()).getPrefix();
         }
 
-        if (achieved = true) {
+        if (p.hasPermission("prefix.title." + titleId)) {
             material = Material.CONCRETE;
             switch (colourData) {
                 case '0':
@@ -166,15 +166,20 @@ public class TitleGui extends Gui {
 
             }
         }
-        else if (achieved = false) {
-            material = Material.STONE;
-        }
+        else material = Material.STONE;
 
         return new GuiItem.Builder()
-                .name("&7Title: " + titlePrefix)
-                .lore(getItemLore(p, achieved, titlePrefix, description, rankPrefix))
-                .click(() -> {config.set("users." + p.getName().toLowerCase() + ".current_rank", titleId);
-                              p.sendMessage("§7[§eTITLE§7] Your active title has been set to " + titlePrefix);})
+                .name("§7Title " + titlePrefix + " §7Information:")
+                .lore(getItemLore(p, p.hasPermission("prefix.title." + titleId), titlePrefix, description, rankPrefix))
+                .click(() -> {
+                    if (p.hasPermission("prefix.title." + titleId)) {
+                        config.getConfigurationSection("users." + p.getName().toLowerCase()).set("current_title", titleId);
+                        RankTitleString.getInstance().saveConfig();
+                        p.sendMessage("§7[§eTITLE§7] Your active title has been set to " + titlePrefix + "§7.");
+                    } else {
+                        p.sendMessage("§7[§eTITLE§7] &cYou do not have access to that title.");
+                    }
+                })
                 .material(material).data(matData)
                 .build();
     }
@@ -182,14 +187,12 @@ public class TitleGui extends Gui {
     private static String[] getItemLore(Player p, boolean achieved, String titlePrefix, String description, String rankPrefix) {
         String isAchieved = !achieved ? "§cNo" : "§aYes";
 
-        String[] lore = {
-                "§7Title " + titlePrefix + " §7Information:",
+        return new String[]{
                 " ",
-                "§7Unlocked:" + isAchieved,
+                "§7Unlocked: " + isAchieved,
                 "§7" + description,
                 " ",
                 "§7[" + titlePrefix + " §7- " + rankPrefix + "§7] §f" + p.getDisplayName()
         };
-        return lore;
     }
 }

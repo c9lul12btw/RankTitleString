@@ -1,17 +1,16 @@
 users:
   mirass:
-    current_rank:
-    staff_rank:
-    build_rank:
-    current_title:
-    titles:
-      title_1: true
-      title_2: false
+    current_rank: manager
+    staff_rank: manager
+    build_rank: stone
+    current_title: first_ranked
   robnoo02:
-    current_rank:
-    staff_rank:
-    build_rank:
-    current_title:
-    titles:
-      title_1: true
-      title_2: false
+    current_rank: dev
+    staff_rank: dev
+    build_rank: stone
+    current_title: old_player
+
+titles:
+  - first_ranked
+  - build_comp
+  - old_playerv

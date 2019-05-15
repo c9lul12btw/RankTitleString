@@ -1,7 +1,8 @@
 package io.github.c9lul12btw;
 
-import io.github.c9lul12btw.cmds.MainCommand;
+import io.github.c9lul12btw.cmds.TitleCommand;
 import io.github.c9lul12btw.managers.PlaceholderManager;
+import io.github.c9lul12btw.gui.GuiUtil;
 import io.github.c9lul12btw.utils.RegisterUtil;
 import io.github.c9lul12btw.utils.LoggerUtil;
 import org.bukkit.Bukkit;
@@ -12,15 +13,16 @@ public class RankTitleString extends JavaPlugin { // Must extend JavaPlugin from
     @Override
     public void onEnable() {
         LoggerUtil.logMessage("Plugin has been enabled!");
+        Bukkit.getPluginManager().registerEvents(new GuiUtil(), this);
         saveDefaultConfig();
-        this.getCommand("rank").setExecutor(new MainCommand());
+        this.getCommand("title").setExecutor(new TitleCommand());
         //registerCmds();
         //registerListeners();
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
             new PlaceholderManager(this).register();
-            LoggerUtil.logMessage("[" + this.getConfig().getName() + "] PAPI is found.");
+            LoggerUtil.logMessage("[RankTitleString] PAPI is found.");
         } else {
-            LoggerUtil.logMessage("[" + this.getConfig().getName() + "] PAPI is not found.");
+            LoggerUtil.logMessage("[RankTitleString] PAPI is not found.");
         }
     }
 
@@ -30,7 +32,7 @@ public class RankTitleString extends JavaPlugin { // Must extend JavaPlugin from
 
     private void registerCmds() {
         // Registers all the commands and sets their executor class
-        RegisterUtil.registerCommand("rt", new MainCommand());
+        RegisterUtil.registerCommand("rt", new TitleCommand());
     }
 
     public static RankTitleString getInstance() {

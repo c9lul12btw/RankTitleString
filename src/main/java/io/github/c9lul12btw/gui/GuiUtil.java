@@ -1,4 +1,4 @@
-package io.github.c9lul12btw.utils;
+package io.github.c9lul12btw.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;

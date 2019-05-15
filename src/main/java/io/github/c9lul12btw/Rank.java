@@ -5,12 +5,12 @@ import java.util.Map;
 public class Rank {
 
     public enum BuildRank {
-        MASTER("",""),
-        EMERALD("",""),
-        DIAMOND("",""),
-        GOLD("",""),
-        IRON("",""),
-        BRONZE("","");
+        MASTER("§5Master",""),
+        EMERALD("§2Emerald",""),
+        DIAMOND("§bDiamond",""),
+        GOLD("§6Gold",""),
+        SILVER("§fSILVER",""),
+        BRONZE("§3Bronze","");
 
         private Map<String, String> info;
         private String prefix;
@@ -31,11 +31,11 @@ public class Rank {
     }
 
     public enum StaffRank {
-        MANAGER("",""),
-        DEVELOPER("",""),
-        ADMIN("",""),
-        MOD("",""),
-        HELPER("",""),
+        MANAGER("§cManager",""),
+        DEVELOPER("§cDev",""),
+        ADMIN("§cAdmin",""),
+        MOD("§2Mod",""),
+        HELPER("§9Helper",""),
         NONE("","");
 
         private Map<String, String> info;
@@ -57,9 +57,9 @@ public class Rank {
     }
 
     public enum TitleRank {
-        FIRST_RANKED("","",'b'),
-        BUILD_COMP("","",'5'),
-        OLD_PLAYER("","",'6'),
+        FIRST_RANKED("§b#1 Ranked","first ranked player",'b'),
+        BUILD_COMP("§5Build Comp","win a build comp",'5'),
+        OLD_PLAYER("§61 Year","been here ages",'6'),
         NONE("","",'7');
 
         private Map<String, String> info;

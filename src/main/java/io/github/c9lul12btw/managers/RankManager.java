@@ -1,9 +1,7 @@
 package io.github.c9lul12btw.managers;
 
-import io.github.c9lul12btw.Rank;
 import io.github.c9lul12btw.RankTitleString;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Set;

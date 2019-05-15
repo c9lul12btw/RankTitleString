@@ -1,5 +1,6 @@
 package io.github.c9lul12btw.managers;
 
+import io.github.c9lul12btw.Rank;
 import io.github.c9lul12btw.RankTitleString;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
@@ -43,7 +44,20 @@ public class PlaceholderManager extends PlaceholderExpansion {
 
         // %rt_prefix%
         if(identifier.equals("prefix")){
-            return RankManager.getPrefix(player);
+            RankManager.updateUsers();
+            if (Rank.StaffRank.valueOf(RankManager.data_ranks.get(player.getName().toLowerCase()).toUpperCase()) == Rank.StaffRank.NONE) {
+                return "&7["
+                        + Rank.TitleRank.valueOf(RankManager.data_titles.get(player.getName().toLowerCase()).toUpperCase()).getPrefix()
+                        + " &7- "
+                        + Rank.BuildRank.valueOf(RankManager.data_ranks.get(player.getName().toLowerCase()).toUpperCase()).getPrefix()
+                        + "&7]";
+            } else {
+                return "&7["
+                        + Rank.TitleRank.valueOf(RankManager.data_titles.get(player.getName().toLowerCase()).toUpperCase()).getPrefix()
+                        + " &7- "
+                        + Rank.StaffRank.valueOf(RankManager.data_ranks.get(player.getName().toLowerCase()).toUpperCase()).getPrefix()
+                        + "&7]";
+            }
         }
 
         // We return null if an invalid placeholder (f.e. %rt_placeholder3%)

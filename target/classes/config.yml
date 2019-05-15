@@ -1,7 +1,18 @@
 users:
   mirass:
-    current_rank: master
-    current_title: first_ranked
+    current_rank: manager
+    staff_rank: manager
+    build_rank: master
+    current_title: build_comp
+    titles:
+      first_ranked: true
+      build_comp: true
+      old_player: false
   robnoo02:
-    current_rank: ender
-    current_title: old_player
+    current_rank:
+    staff_rank:
+    build_rank:
+    current_title:
+    titles:
+      title_1: true
+      title_2: false

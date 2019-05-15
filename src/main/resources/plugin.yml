@@ -1,11 +1,11 @@
 name: RankTitleString
-version: 2.1
+version: 3.1.1
 description: Creates and updates title-rank prefixes for chat
 author: Mirass
 main: io.github.c9lul12btw.RankTitleString
 depend: [PlaceholderAPI]
 
 commands:
-  rank:
+  title:
     description: 'Example command'
     usage: '/<command>'
